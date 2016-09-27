@@ -29,6 +29,9 @@
     "underscore.string": "^2.3.3"
   },
   "devDependencies": {
+    "@types/hashmap": "^2.0.29",
+    "@types/q": "0.0.31",
+    "@types/underscore": "^1.7.33",
     "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
@@ -46,6 +49,7 @@
     "grunt-typedoc": "^0.1.1",
     "grunt-typescript": "^0.3.8",
     "sinon": "^1.12.1",
-    "typedoc": "^0.1.1"
+    "typedoc": "^0.1.1",
+    "typescript": "^2.0.3"
   }
 }
