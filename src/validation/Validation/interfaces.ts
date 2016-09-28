@@ -1,3 +1,9 @@
+import { IComponent } from './../Utils/component.interface';
+import { ISignal } from './../Utils/signal.interface';
+import * as Q from 'q';
+
+import HashMap = require('hashmap');
+
 /**
      * Custom message functions.
      */
@@ -66,7 +72,7 @@ export interface IOptional { (): boolean; }
  * It represents the validation result.
  */
 export interface IValidationFailure extends IError {
-  //Validator:IPropertyValidator
+  // Validator:IPropertyValidator
   IsAsync: boolean;
   Error: IError;
 }
@@ -75,7 +81,7 @@ export interface IValidationFailure extends IError {
  * This class provides unit of information about error.
  * Implements composite design pattern to enable nesting of error information.
  */
-export interface IValidationResult extends Utils.IComponent {
+export interface IValidationResult extends IComponent {
 
   /**
    * The name of error collection.
@@ -126,12 +132,12 @@ export interface IValidationResult extends Utils.IComponent {
   /**
    * Occurs when the validation errors have changed for a property or for the entire entity.
    */
-  ErrorsChanged: Utils.ISignal<any>;
+  ErrorsChanged: ISignal<any>;
 
   /**
    * It enables support for localization of error messages.
    */
-  TranslateArgs?: Array<IErrorTranslateArgs>
+  TranslateArgs?: Array<IErrorTranslateArgs>;
 }
 /**
 * It defines validation function.
@@ -219,7 +225,7 @@ export interface IAbstractValidator<T> {
    */
   ValidatorFor<K>(prop: string, validator: IAbstractValidator<K>, forList?: boolean);
 
-  //Validators:{ [name: string]: Array<IPropertyValidator> ; };
+  // Validators:{ [name: string]: Array<IPropertyValidator> ; };
 
   /**
    * It creates new concrete validation rule and assigned data context to this rule.
@@ -239,17 +245,17 @@ export interface IAbstractValidator<T> {
 /**
  * It represents concrete validation rule for type of <T>.
  */
-export interface IAbstractValidationRule<T> extends Utils.IComponent {
+export interface IAbstractValidationRule<T> extends IComponent {
 
   /**
    * It executes sync validation rules using a validation context and returns a collection of Validation Failures.
    */
-  Validate(context: T): IValidationResult
+  Validate(context: T): IValidationResult;
 
   /**
    * It executes async validation rules using a validation context and returns a collection of Validation Failures asynchronoulsy.
    */
-  ValidateAsync(context: T): Q.Promise<IValidationResult>
+  ValidateAsync(context: T): Q.Promise<IValidationResult>;
 
   /**
    * It executes sync and async validation rules using a validation context and returns a collection of Validation Failures asynchronoulsy.
@@ -264,27 +270,27 @@ export interface IAbstractValidationRule<T> extends Utils.IComponent {
   /**
    * Return validation results.
    */
-  ValidationResult: IValidationResult
+  ValidationResult: IValidationResult;
 
   /**
    * Return property validation rules.
    */
-  Rules: { [name: string]: IPropertyValidationRule<T>; }
+  Rules: { [name: string]: IPropertyValidationRule<T>; };
 
   /**
    * Return shared validation rules.
    */
-  Validators: { [name: string]: IValidator; }
+  Validators: { [name: string]: IValidator; };
 
   /**
    * Return child validators.
    */
-  Children: { [name: string]: IAbstractValidationRule<any>; }
+  Children: { [name: string]: IAbstractValidationRule<any>; };
 
   /**
    * Return true if this validation rule is intended for list of items, otherwise true.
    */
-  ForList: boolean;
+  ForList?: boolean;
 
 }
 /**
@@ -301,13 +307,13 @@ export interface IAbstractListValidationRule<T> {
    *  Return rows of validation rules for collection-based structures (arrays).
    *
    */
-  Rows: Array<IAbstractValidationRule<T>>
+  Rows: Array<IAbstractValidationRule<T>>;
 
   /**
    * Refresh (add or removes row from collection of validation rules based on passed data context).
    * @param list collection-based structure data
    */
-  RefreshRows(context: Array<T>)
+  RefreshRows(context: Array<T>);
 
 }
 /**
@@ -350,7 +356,7 @@ export interface IValidationContext<T> {
   /**
    * Data context for validation rule.
    */
-  Data: T
+  Data: T;
 }
 
 /**
@@ -374,4 +380,10 @@ export interface IValidationResultVisitor {
   AddValidation(IValidator);
 
   ValidationResult: IValidationResult;
+}
+
+export interface IRemoteOptions {
+  url: any;
+  type?: string;
+  data?: any;
 }

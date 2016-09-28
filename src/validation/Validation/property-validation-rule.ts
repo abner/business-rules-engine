@@ -20,7 +20,7 @@ import { MessageLocalization } from './message-localization';
  * @description
  * It represents a property validation rule. The property has assigned collection of property validators.
  */
-class PropertyValidationRule<T> extends ValidationResult implements IPropertyValidationRule<T> {
+export class PropertyValidationRule<T> extends ValidationResult implements IPropertyValidationRule<T> {
 
   public Validators: { [name: string]: any } = {};
   public ValidationFailures: { [name: string]: IValidationFailure } = {};

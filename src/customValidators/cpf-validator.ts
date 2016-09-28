@@ -1,27 +1,25 @@
-import moment = require('moment');
-import * as _ from 'underscore';
 import * as Validation from '../validation/Validation';
 /**
  * @ngdoc object
- * @name ICOValidator
+ * @name CPFValidator
  *
  * @description
- * Return true for valid identification number of CZE company (called ico), otherwise return false.
+ * Return true for valid cpf, otherwise return false.
  *
  * @example
  *
  * <pre>
  *  //create validator
- *  let validator = new IcoValidator();
+ *  let validator = new CPFValidator();
  *
- *  //valid IC -> return true
- *  let result = validator.isAcceptable('12312312');
- *  //unvalid IC  -> return true
- *  let result = validator.isAcceptable('11111111');
+ *  //valid CPF -> return true
+ *  let result = validator.isAcceptable('42752206259');
+ *  //unvalid IC  -> return false
+ *  let result = validator.isAcceptable('11111111111');
  *
  * </pre>
  */
-export class ICOValidator implements Validation.IPropertyValidator {
+export class CPFValidator implements Validation.IPropertyValidator {
 
     /**
      * It checks validity of identification number of CZE company (called ico)
@@ -31,14 +29,22 @@ export class ICOValidator implements Validation.IPropertyValidator {
     public isAcceptable(input: string) {
 
         if (input === undefined) return false;
-        if (input.length === 0) return false;
+        if (input.length === 0 || input.length > 11) return false;
 
         if (!/^\d+$/.test(input)) return false;
+
+        if ([
+              '00000000000', '11111111111', '22222222222', '33333333333',
+              '44444444444', '55555555555', '66666666666', '77777777777',
+              '88888888888', '99999999999'
+            ].indexOf(input) > -1) {
+          return false;
+        }
 
         let Sci = [];
         let Souc;
         let Del = input.length;
-        let kon = parseInt(input.substring(Del, Del - 1), 10);// CLng(Right(strInput, 1));
+        let kon = parseInt(input.substring(Del, Del - 1), 10); // CLng(Right(strInput, 1));
         // let Numer = parseInt(input.substring(0,Del - 1),10);
         Del = Del - 1;
         Souc = 0;
@@ -61,5 +67,5 @@ export class ICOValidator implements Validation.IPropertyValidator {
         return false;
     }
 
-    tagName = 'ico';
+    tagName = 'cpf';
 }

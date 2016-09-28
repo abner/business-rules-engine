@@ -10,7 +10,7 @@ import { IValidationContext } from './interfaces';
 * @description
 * It represents a data context for validation rule.
 */
-class ValidationContext<T> implements IValidationContext<T> {
+export class ValidationContext<T> implements IValidationContext<T> {
 
   constructor(public Key: string, public Data: T) {
   }
