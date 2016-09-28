@@ -1,11 +1,13 @@
-import  * as Validation from './validation/Validation';
-import  * as Validators from './validation/Validators';
-import  * as FormSchema from './validation/FormSchema';
+import  * as ValidationsModule from './validation/Validation';
+import  * as ValidatorsModule from './validation/Validators';
+import  * as FormSchemaModule from './validation/FormSchema';
 
-const BusinessRulesEngine = {
-  Validation: Validation,
-  Validators: Validators,
-  FormSchema: FormSchema
-}
+export const FormSchema = FormSchemaModule;
+export const Validators = ValidatorsModule;
+export const Validation = ValidationsModule;
 
-export default BusinessRulesEngine;
+export const BusinessRulesEngine = {
+  Validation: ValidationsModule,
+  Validators: ValidatorsModule,
+  FormSchema: FormSchemaModule
+};

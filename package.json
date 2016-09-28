@@ -2,8 +2,8 @@
   "name": "business-rules-engine",
   "version": "1.2.8",
   "description": "business rules engine",
-  "main": "src/index.ts",
-  "typings": "dist2/index.d.ts",
+  "main": "dist2/business-rules-engine.js",
+  "typings": "dist2/src/index.d.ts",
   "scripts": {
     "test": "node_modules/.bin/grunt ci"
   },
@@ -37,6 +37,7 @@
     "@types/q": "0.0.31",
     "@types/underscore": "^1.7.33",
     "@types/underscore.string": "0.0.30",
+    "awesome-typescript-loader": "^2.2.4",
     "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",
@@ -56,6 +57,7 @@
     "sinon": "^1.12.1",
     "tslint": "^3.15.1",
     "typedoc": "^0.1.1",
-    "typescript": "^2.0.3"
+    "typescript": "^2.0.3",
+    "webpack": "^1.13.2"
   }
 }
