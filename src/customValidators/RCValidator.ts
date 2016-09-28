@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import * as _s from 'underscore.string';
+import * as _s from 'underscore';
 import * as Validation from '../validation/Validation';
 /**
  * @ngdoc object

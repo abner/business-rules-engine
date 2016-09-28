@@ -8,8 +8,9 @@ import {
 } from './interfaces';
 import { ValidationFailure, Error } from './errors';
 import { ValidationResult } from './results';
-import { IValidationContext, IAsyncPropertyValidator } from './interfaces';
+import { IValidationContext, IAsyncPropertyValidator, ValidationFailuresMap } from './interfaces';
 import { MessageLocalization } from './message-localization';
+
 /**
  *
  * @ngdoc object
@@ -23,7 +24,7 @@ import { MessageLocalization } from './message-localization';
 export class PropertyValidationRule<T> extends ValidationResult implements IPropertyValidationRule<T> {
 
   public Validators: { [name: string]: any } = {};
-  public ValidationFailures: { [name: string]: IValidationFailure } = {};
+  public ValidationFailures: ValidationFailuresMap = {};
   // public AsyncValidationFailures:{[name:string]: IAsyncValidationFailure} = {};
 
   public AcceptVisitor(visitor: IValidationResultVisitor) {

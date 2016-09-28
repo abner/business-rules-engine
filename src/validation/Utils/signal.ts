@@ -1,3 +1,4 @@
+import { ISignal } from './signal.interface';
 /*
     It represents signal (event).
 */

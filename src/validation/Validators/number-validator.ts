@@ -1,3 +1,4 @@
+import { IStringValidator } from '../Validation/interfaces';
 /**
 * Return true if it is a valid number representation, otherwise false.
 */

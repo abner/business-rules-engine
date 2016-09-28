@@ -2,7 +2,8 @@
   "name": "business-rules-engine",
   "version": "1.2.8",
   "description": "business rules engine",
-  "main": "src/validation",
+  "main": "src/index.ts",
+  "typings": "dist2/index.d.ts",
   "scripts": {
     "test": "node_modules/.bin/grunt ci"
   },
@@ -26,14 +27,16 @@
     "hashmap": "^1.1.0",
     "moment": "^2.15.1",
     "q": "1.0.1",
-    "underscore": "^1.0.6",
-    "underscore.string": "^2.3.3"
+    "underscore": "^1.8.3",
+    "underscore.string": "^2.4.0"
   },
   "devDependencies": {
     "@types/axios": "^0.9.32",
     "@types/hashmap": "^2.0.29",
+    "@types/moment": "^2.13.0",
     "@types/q": "0.0.31",
     "@types/underscore": "^1.7.33",
+    "@types/underscore.string": "0.0.30",
     "expect.js": "~0.2.0",
     "grunt": "~0.4.1",
     "grunt-cli": "~0.1.9",

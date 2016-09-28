@@ -1,11 +1,6 @@
-///<reference path='../../typings/underscore/underscore.d.ts'/>
-///<reference path='../../typings/q/q.d.ts'/>
-///<reference path='../../typings/business-rules-engine/business-rules-engine.d.ts'/>
-
-
 import Q = require("q");
 import _ = require("underscore");
-
+import * as Validation from '../validation/Validation';
 /**
  * @ngdoc object
  * @name ParamValidator

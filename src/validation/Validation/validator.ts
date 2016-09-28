@@ -6,6 +6,7 @@ import {
 import { ValidationFailure, Error } from './errors';
 
 import * as Q from 'q';
+import * as _ from 'underscore';
 /**
      *
      * @ngdoc object

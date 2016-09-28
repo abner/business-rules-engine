@@ -11,6 +11,9 @@ export interface IErrorCustomMessage {
   (config: any, args: any): string;
 }
 
+
+export interface ValidationFailuresMap { [name: string]: IValidationFailure };
+
 /**
  * It represents a property validator for atomic object.
  */

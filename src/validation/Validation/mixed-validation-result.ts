@@ -2,6 +2,7 @@ import { IPropertyValidationRule, IValidationResult } from './interfaces';
 import { CompositeValidationResult } from './results';
 import { ValidationFailure } from './errors';
 import { PropertyValidationRule } from './property-validation-rule';
+import { ValidationFailuresMap } from './interfaces';
 
 /**
  * It represents mixed validation rule for composite error object and property validation rule error.
@@ -15,7 +16,7 @@ export class MixedValidationResult extends CompositeValidationResult implements 
   }
 
   public get Children() { return this.Composite.Children; }
-  public get ValidationFailures() { return this.PropRule.ValidationFailures; }
+  public get ValidationFailures(): ValidationFailuresMap { return this.PropRule.ValidationFailures; }
 
   public get HasErrorsDirty(): boolean {
     if (this.Composite.HasErrorsDirty) return true;

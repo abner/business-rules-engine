@@ -1,6 +1,7 @@
 import { IValidationResult, IOptional, IErrorTranslateArgs } from './interfaces';
 import { PropertyValidationRule } from './property-validation-rule';
-
+import  * as Utils  from '../Utils';
+import * as _ from 'underscore';
 
 
 /**
