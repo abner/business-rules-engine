@@ -7583,6 +7583,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _.isBoolean(s);
 	            case 'number':
 	                return _.isNumber(s);
+	            case 'date':
+	                return _.isDate(s);
 	            case 'integer':
 	                return /^\d+$/.test(s);
 	            case 'object':

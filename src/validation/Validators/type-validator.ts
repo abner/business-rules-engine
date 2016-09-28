@@ -27,8 +27,10 @@ export class TypeValidator implements IPropertyValidator {
         return _.isBoolean(s);
       case 'number':
         return _.isNumber(s);
+      case 'date':
+        return _.isDate(s);
       case 'integer':
-        return /^\d+$/.test(s)
+        return /^\d+$/.test(s);
       case 'object':
         return _.isObject(s);
       case 'array':
