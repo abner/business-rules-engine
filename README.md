@@ -1,6 +1,12 @@
 # Business rules engine
 
-![logo](https://github.com/rsamec/form/blob/master/form_logo.jpg)
+
+## It is a Fork 
+
+This Project is a fork of [https://github.com/rsamec/business-rules-engine](https://github.com/rsamec/business-rules-engine). We really appreciate the work done in the original project and our idea is submit our updates to the original Business Rules Engine Project, adding more validators and refactory it to accomodate changes in the way Typescript 2 based projects are distributed to allow consumers developers to have the typings embedded direct without any extra old tools ( tsd and typings ).
+
+We will submit the changes to the original author. If he accept our changes this fork will die. Otherwise we plan to make improvements we need in this fork.
+
 
 Business rules engine is a lightweight JavaScript library for easy business rules definition of the product, the contract, the form etc.
 

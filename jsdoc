@@ -1,0 +1,14 @@
+./jsdoc.conf.json
+./src/customValidators/cnpj-validator.ts
+./src/customValidators/cpf-validator.ts
+./src/customValidators/DateCompareValidator.ts
+./src/customValidators/ICOValidator.ts
+./src/customValidators/ParamValidator.ts
+./src/customValidators/RCValidator.ts
+./src/localization/messages_pt.ts
+./src/metaDataRules/util.ts
+./src/localization/messages_cz.ts
+./src/localization/messages_de.ts
+./src/localization/messages_en.ts
+./src/metaDataRules/form.ts
+./src/metaDataRules/metaDataRules.ts

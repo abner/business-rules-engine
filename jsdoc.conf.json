@@ -1,0 +1,16 @@
+{
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "source": {
+        "includePattern": "\\.ts$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "plugins": [
+        "node_modules/ts2jsdoc"
+    ],
+    "opts": {
+        "template": "node_modules/ts2jsdoc/template"
+    }
+}

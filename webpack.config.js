@@ -1,7 +1,11 @@
 var webpack = require('webpack');
 var path = require('path');
+var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
+
 var libraryName = 'BusinessRulesEngine';
 var outputFile = 'businessRulesEngine.js';
+
+var tsConfig = require('./src/tsconfig.json');
 
 var config = {
   entry: __dirname + '/src/index.ts',
@@ -30,6 +34,9 @@ var config = {
       }
     ]
   },
+  plugins: [
+    new TypedocWebpackPlugin(tsConfig)
+  ],
   resolve: {
     root: path.join(__dirname, './src'),
     extensions: ['', '.ts', '.js']
