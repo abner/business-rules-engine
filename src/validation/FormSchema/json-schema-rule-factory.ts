@@ -1,6 +1,10 @@
+import * as _ from 'underscore';
+
 import { IValidationRuleFactory } from './validation-rule-factory.interface';
 
 import * as Validation from '../Validation';
+import * as Validators from '../Validators';
+import { Util } from './util';
 
 /**
  * It represents the JSON schema factory for creating validation rules based on JSON form schema.
@@ -38,20 +42,20 @@ export class JsonSchemaRuleFactory implements IValidationRuleFactory {
    */
   private ParseAbstractRule(formSchema: any): Validation.IAbstractValidator<any> {
 
-    var rule = new Validation.AbstractValidator<any>();
+    let rule = new Validation.AbstractValidator<any>();
 
-    for (var key in formSchema) {
-      var item = formSchema[key];
-      var type = item[Util.TYPE_KEY];
-      if (type === "object") {
+    for (let key in formSchema) {
+      let item = formSchema[key];
+      let type = item[Util.TYPE_KEY];
+      if (type === 'object') {
         rule.ValidatorFor(key, this.ParseAbstractRule(item[Util.PROPERTIES_KEY]));
       }
-      else if (type === "array") {
-        _.each(this.ParseValidationAttribute(item), function (validator) { rule.RuleFor(key, validator) });
+      else if (type === 'array') {
+        _.each(this.ParseValidationAttribute(item), function (validator) { rule.RuleFor(key, validator); });
         rule.ValidatorFor(key, this.ParseAbstractRule(item[Util.ARRAY_KEY][Util.PROPERTIES_KEY]), true);
       }
       else {
-        _.each(this.ParseValidationAttribute(item), function (validator) { rule.RuleFor(key, validator) });
+        _.each(this.ParseValidationAttribute(item), function (validator) { rule.RuleFor(key, validator); });
       }
     }
     return rule;
@@ -62,106 +66,107 @@ export class JsonSchemaRuleFactory implements IValidationRuleFactory {
    */
   private ParseValidationAttribute(item: any): Array<any> {
 
-    var validators = new Array<any>();
+    let validators = new Array<any>();
+    let validation: any;
     if (item === undefined) return validators;
 
-    //5.  Validation keywords sorted by instance types
-    //http://json-schema.org/latest/json-schema-validation.html
+    // 5.  Validation keywords sorted by instance types
+    // http://json-schema.org/latest/json-schema-validation.html
 
-    //5.1. - Validation keywords for numeric instances (number and integer)
+    // 5.1. - Validation keywords for numeric instances (number and integer)
     // multipleOf validation
-    validation = item["multipleOf"];
+    validation = item['multipleOf'];
     if (validation !== undefined) {
       validators.push(new Validators.MultipleOfValidator(validation));
     }
 
     // maximum validation
-    validation = item["maximum"];
+    validation = item['maximum'];
     if (validation !== undefined) {
-      validators.push(new Validators.MaxValidator(validation, item["exclusiveMaximum"]));
+      validators.push(new Validators.MaxValidator(validation, item['exclusiveMaximum']));
     }
 
     // minimum validation
-    validation = item["minimum"];
+    validation = item['minimum'];
     if (validation !== undefined) {
-      validators.push(new Validators.MinValidator(validation, item["exclusiveMinimum"]));
+      validators.push(new Validators.MinValidator(validation, item['exclusiveMinimum']));
     }
 
-    //5.2. - Validation keywords for strings
+    // 5.2. - Validation keywords for strings
 
     // maxLength validation
-    validation = item["maxLength"];
+    validation = item['maxLength'];
     if (validation !== undefined) {
       validators.push(new Validators.MaxLengthValidator(validation));
     }
 
     // minLength validation
-    validation = item["minLength"];
+    validation = item['minLength'];
     if (validation !== undefined) {
       validators.push(new Validators.MinLengthValidator(validation));
     }
     // pattern validation
-    validation = item["pattern"];
+    validation = item['pattern'];
     if (validation !== undefined) {
       validators.push(new Validators.PatternValidator(validation));
     }
 
 
-    //5.3.  Validation keywords for arrays
-    //TODO: additionalItems and items
+    // 5.3.  Validation keywords for arrays
+    // TODO: additionalItems and items
 
     // min items validation
-    validation = item["minItems"];
+    validation = item['minItems'];
     if (validation !== undefined) {
-      validators.push(new Validators.MinItemsValidator(validation))
+      validators.push(new Validators.MinItemsValidator(validation));
     }
 
     // max items validation
-    validation = item["maxItems"];
+    validation = item['maxItems'];
     if (validation !== undefined) {
-      validators.push(new Validators.MaxItemsValidator(validation))
+      validators.push(new Validators.MaxItemsValidator(validation));
     }
 
     // uniqueItems validation
-    validation = item["uniqueItems"];
+    validation = item['uniqueItems'];
     if (validation !== undefined) {
-      validators.push(new Validators.UniqItemsValidator())
+      validators.push(new Validators.UniqItemsValidator());
     }
 
-    //5.4.  Validation keywords for objects
-    //TODO: maxProperties, minProperties, additionalProperties, properties and patternProperties, dependencies
+    // 5.4.  Validation keywords for objects
+    // TODO: maxProperties, minProperties, additionalProperties, properties and patternProperties, dependencies
 
     // required validation
-    var validation = item["required"];
+    validation = item['required'];
     if (validation !== undefined && validation) {
       validators.push(new Validators.RequiredValidator());
     }
 
-    //5.5.  Validation keywords for any instance type
-    // enum validation
-    validation = item["enum"];
+    // 5.5.  Validation keywords for any instance type
+    //  enum validation
+    validation = item['enum'];
     if (validation !== undefined) {
-      validators.push(new Validators.EnumValidator(validation))
+      validators.push(new Validators.EnumValidator(validation));
     }
 
     // type validation
-    var validation = item["type"];
+    validation = item['type'];
     if (validation !== undefined) {
       validators.push(new Validators.TypeValidator(validation));
     }
-    //7.3.2 email
-    validation = item["email"];
+    // 7.3.2 email
+    validation = item['email'];
     if (validation !== undefined) {
-      validators.push(new Validators.EmailValidator())
+      validators.push(new Validators.EmailValidator());
     }
 
-    //7.3.6 url
-    validation = item["uri"];
+    // 7.3.6 url
+    validation = item['uri'];
     if (validation !== undefined) {
-      validators.push(new Validators.UrlValidator())
+      validators.push(new Validators.UrlValidator());
     }
 
-    //TODO: allOf,anyOf,oneOf,not,definitions
+    // TODO: allOf,anyOf,oneOf,not,definitions
 
     return validators;
   }
