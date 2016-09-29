@@ -1,4 +1,4 @@
-import * as Validation from '../validation/Validation';
+import * as Validation from '../Validation';
 /**
  * @ngdoc object
  * @name CNPJValidator

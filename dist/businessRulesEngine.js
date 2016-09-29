@@ -57,7 +57,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	var ValidationsModule = __webpack_require__(1);
 	var ValidatorsModule = __webpack_require__(24);
-	var FormSchemaModule = __webpack_require__(74);
+	var FormSchemaModule = __webpack_require__(76);
 	exports.FormSchema = FormSchemaModule;
 	exports.Validators = ValidatorsModule;
 	exports.Validation = ValidationsModule;
@@ -5491,9 +5491,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	__export(__webpack_require__(68));
 	__export(__webpack_require__(69));
 	__export(__webpack_require__(70));
-	__export(__webpack_require__(71));
-	__export(__webpack_require__(72));
 	__export(__webpack_require__(73));
+	__export(__webpack_require__(74));
+	__export(__webpack_require__(75));
 
 
 /***/ },
@@ -7558,19 +7558,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	var _ = __webpack_require__(6);
+	var cnpj_validator_1 = __webpack_require__(71);
+	var cpf_validator_1 = __webpack_require__(72);
 	/**
 	 * Return true if an value is a specified type, otherwise false.
 	 *
 	 *  @require underscore
 	 */
 	var TypeValidator = (function () {
-	    /**
+	    /*
 	     * Default constructor.
 	     * @param Type - keywords that defines an concrete type
 	     */
 	    function TypeValidator(Type) {
 	        this.Type = Type;
 	        this.tagName = 'type';
+	        this.cnpjValidator = new cnpj_validator_1.CNPJValidator();
+	        this.cpfValidator = new cpf_validator_1.CPFValidator();
 	        if (this.Type === undefined) {
 	            this.Type = 'string';
 	        }
@@ -7591,6 +7595,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	                return _.isObject(s);
 	            case 'array':
 	                return _.isArray(s);
+	            case 'cnpj':
+	                return this.cnpjValidator.isAcceptable(s);
+	            case 'cpf':
+	                return this.cpfValidator.isAcceptable(s);
+	            case 'cpfcnpj':
+	                return this.cpfValidator.isAcceptable(s) || this.cnpjValidator.isAcceptable(s);
+	            case 'cnpjcpf':
+	                return this.cpfValidator.isAcceptable(s) || this.cnpjValidator.isAcceptable(s);
 	            default:
 	                return false;
 	        }
@@ -7602,6 +7614,158 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 71 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	 * @ngdoc object
+	 * @name CNPJValidator
+	 *
+	 * @description
+	 * Return true for valid cpf, otherwise return false.
+	 *
+	 * @example
+	 *
+	 * <pre>
+	 *  //create validator
+	 *  let validator = new CNPJValidator();
+	 *
+	 *  //valid CNPJ -> return true
+	 *  let result = validator.isAcceptable('00000000000191');
+	 *  //unvalid CNPJ  -> return false
+	 *  let result = validator.isAcceptable('00000000000192');
+	 *
+	 * </pre>
+	 */
+	var CNPJValidator = (function () {
+	    function CNPJValidator() {
+	        this.tagName = 'cnpj';
+	    }
+	    /**
+	     * It checks validity of identification number of CZE company (called ico)
+	     * @param input {string} value to check
+	     * @returns {boolean} return true for valid value, otherwise false
+	     */
+	    CNPJValidator.prototype.isAcceptable = function (input) {
+	        if (input === undefined)
+	            return false;
+	        if (input.length === 0 || input.length > 14)
+	            return false;
+	        if (!/^\d+$/.test(input))
+	            return false;
+	        if ([
+	            '00000000000000', '11111111111111', '22222222222222', '33333333333333',
+	            '44444444444444', '55555555555555', '66666666666666', '77777777777777',
+	            '88888888888888', '99999999999999'
+	        ].indexOf(input) > -1) {
+	            return false;
+	        }
+	        var Sci = [];
+	        var Souc;
+	        var Del = input.length;
+	        var kon = parseInt(input.substring(Del, Del - 1), 10); // CLng(Right(strInput, 1));
+	        // let Numer = parseInt(input.substring(0,Del - 1),10);
+	        Del = Del - 1;
+	        Souc = 0;
+	        for (var a = 0; a < Del; a++) {
+	            Sci[a] = parseInt(input.substr((Del - a) - 1, 1), 10);
+	            Sci[a] = Sci[a] * (a + 2);
+	            Souc = Souc + Sci[a];
+	        }
+	        if (Souc > 0) {
+	            // let resul = 11 - (Souc % 11);
+	            var resul = Souc % 11;
+	            var mezi = Souc - resul;
+	            resul = mezi + 11;
+	            resul = resul - Souc;
+	            if ((resul === 10 && kon === 0) || (resul === 11 && kon === 1) || (resul === kon))
+	                return true;
+	        }
+	        return false;
+	    };
+	    return CNPJValidator;
+	}());
+	exports.CNPJValidator = CNPJValidator;
+
+
+/***/ },
+/* 72 */
+/***/ function(module, exports) {
+
+	"use strict";
+	/**
+	 * @ngdoc object
+	 * @name CPFValidator
+	 *
+	 * @description
+	 * Return true for valid cpf, otherwise return false.
+	 *
+	 * @example
+	 *
+	 * <pre>
+	 *  //create validator
+	 *  let validator = new CPFValidator();
+	 *
+	 *  //valid CPF -> return true
+	 *  let result = validator.isAcceptable('42752206259');
+	 *  //unvalid IC  -> return false
+	 *  let result = validator.isAcceptable('11111111111');
+	 *
+	 * </pre>
+	 */
+	var CPFValidator = (function () {
+	    function CPFValidator() {
+	        this.tagName = 'cpf';
+	    }
+	    /**
+	     * It checks validity of identification number of CZE company (called ico)
+	     * @param input {string} value to check
+	     * @returns {boolean} return true for valid value, otherwise false
+	     */
+	    CPFValidator.prototype.isAcceptable = function (input) {
+	        if (input === undefined)
+	            return false;
+	        if (input.length === 0 || input.length > 11)
+	            return false;
+	        if (!/^\d+$/.test(input))
+	            return false;
+	        if ([
+	            '00000000000', '11111111111', '22222222222', '33333333333',
+	            '44444444444', '55555555555', '66666666666', '77777777777',
+	            '88888888888', '99999999999'
+	        ].indexOf(input) > -1) {
+	            return false;
+	        }
+	        var Sci = [];
+	        var Souc;
+	        var Del = input.length;
+	        var kon = parseInt(input.substring(Del, Del - 1), 10); // CLng(Right(strInput, 1));
+	        // let Numer = parseInt(input.substring(0,Del - 1),10);
+	        Del = Del - 1;
+	        Souc = 0;
+	        for (var a = 0; a < Del; a++) {
+	            Sci[a] = parseInt(input.substr((Del - a) - 1, 1), 10);
+	            Sci[a] = Sci[a] * (a + 2);
+	            Souc = Souc + Sci[a];
+	        }
+	        if (Souc > 0) {
+	            // let resul = 11 - (Souc % 11);
+	            var resul = Souc % 11;
+	            var mezi = Souc - resul;
+	            resul = mezi + 11;
+	            resul = resul - Souc;
+	            if ((resul === 10 && kon === 0) || (resul === 11 && kon === 1) || (resul === kon))
+	                return true;
+	        }
+	        return false;
+	    };
+	    return CPFValidator;
+	}());
+	exports.CPFValidator = CPFValidator;
+
+
+/***/ },
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7627,7 +7791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 72 */
+/* 74 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7649,7 +7813,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 73 */
+/* 75 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -7670,20 +7834,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 74 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	function __export(m) {
 	    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 	}
-	__export(__webpack_require__(75));
-	__export(__webpack_require__(76));
+	/**
+	 * @module foo
+	 */
 	__export(__webpack_require__(77));
+	__export(__webpack_require__(78));
+	__export(__webpack_require__(79));
 
 
 /***/ },
-/* 75 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -7863,15 +8030,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 76 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	var _ = __webpack_require__(6);
 	var Validation = __webpack_require__(1);
 	var Validators = __webpack_require__(24);
-	var util_1 = __webpack_require__(77);
+	var util_1 = __webpack_require__(79);
 	/**
+	 * @module FormSchema
 	 * It represents the JSON schema factory for creating validation rules based on JSON form schema.
 	 * It uses constraints keywords from JSON Schema Validation specification.
 	 */
@@ -8020,7 +8188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 77 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";

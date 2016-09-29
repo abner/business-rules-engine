@@ -7,10 +7,8 @@ import { IPropertyValidator } from './../Validation/interfaces';
 export declare class TypeValidator implements IPropertyValidator {
     Type: string;
     tagName: string;
-    /**
-     * Default constructor.
-     * @param Type - keywords that defines an concrete type
-     */
+    private cnpjValidator;
+    private cpfValidator;
     constructor(Type: string);
     isAcceptable(s: any): boolean;
 }

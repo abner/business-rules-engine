@@ -1,6 +1,5 @@
 var webpack = require('webpack');
 var path = require('path');
-var TypedocWebpackPlugin = require('typedoc-webpack-plugin');
 
 var libraryName = 'BusinessRulesEngine';
 var outputFile = 'businessRulesEngine.js';
@@ -35,7 +34,6 @@ var config = {
     ]
   },
   plugins: [
-    new TypedocWebpackPlugin(tsConfig)
   ],
   resolve: {
     root: path.join(__dirname, './src'),
