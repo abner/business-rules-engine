@@ -1,6 +1,7 @@
 import { IPropertyValidator } from './../Validation/interfaces';
 import * as _ from 'underscore';
-
+import { CNPJValidator } from './cnpj-validator';
+import { CPFValidator } from './cpf-validator';
 /**
  * Return true if an value is a specified type, otherwise false.
  *
@@ -9,7 +10,11 @@ import * as _ from 'underscore';
 export class TypeValidator implements IPropertyValidator {
 
   tagName = 'type';
-  /**
+
+  private cnpjValidator: CNPJValidator = new CNPJValidator();
+  private cpfValidator: CPFValidator = new CPFValidator();
+
+  /*
    * Default constructor.
    * @param Type - keywords that defines an concrete type
    */
@@ -35,6 +40,14 @@ export class TypeValidator implements IPropertyValidator {
         return _.isObject(s);
       case 'array':
         return _.isArray(s);
+      case 'cnpj':
+        return this.cnpjValidator.isAcceptable(s);
+      case 'cpf':
+        return this.cpfValidator.isAcceptable(s);
+      case 'cpfcnpj':
+        return this.cpfValidator.isAcceptable(s) || this.cnpjValidator.isAcceptable(s);
+      case 'cnpjcpf':
+        return this.cpfValidator.isAcceptable(s) || this.cnpjValidator.isAcceptable(s);
       default:
         return false;
     }
