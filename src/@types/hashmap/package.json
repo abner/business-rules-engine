@@ -1,0 +1,11 @@
+{
+
+  "description": "Stub TypeScript definitions entry for HashMap",
+  "devDependencies": {},
+  "license": "MIT",
+  "typings": "hashmap.d.ts",
+  "main": "",
+  "name": "hashmap",
+  "scripts": {},
+  "version": "2.1.0"
+}
