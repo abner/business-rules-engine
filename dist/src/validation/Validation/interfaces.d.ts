@@ -1,7 +1,7 @@
 import { IComponent } from './../Utils/component.interface';
 import { ISignal } from './../Utils/signal.interface';
 import * as Q from 'q';
-import HashMap = require('hashmap');
+import { HashMap } from 'hashmap';
 /**
      * Custom message functions.
      */

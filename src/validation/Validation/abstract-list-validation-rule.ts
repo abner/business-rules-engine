@@ -1,6 +1,6 @@
 import * as Q from 'q';
 import * as _ from 'underscore';
-import HashMap = require('hashmap');
+import { HashMap } from 'hashmap';
 
 import { IValidationResult } from './interfaces';
 import { AbstractValidationRule } from './abstract-validation-rule';
