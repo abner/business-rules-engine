@@ -7649,7 +7649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    CNPJValidator.prototype.isAcceptable = function (input) {
 	        if (input === undefined)
 	            return false;
-	        if (input.length === 0 || input.length != 14)
+	        if (input.length === 0 || input.length !== 14)
 	            return false;
 	        if (!/^\d+$/.test(input))
 	            return false;
@@ -7660,7 +7660,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ].indexOf(input) > -1) {
 	            return false;
 	        }
-	        
 	        var Sci = [];
 	        var Souc;
 	        var Del = input.length;
@@ -7726,7 +7725,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    CPFValidator.prototype.isAcceptable = function (input) {
 	        if (input === undefined)
 	            return false;
-	        if (input.length === 0 || input.length != 11)
+	        if (input.length === 0 || input.length !== 11)
 	            return false;
 	        if (!/^\d+$/.test(input))
 	            return false;

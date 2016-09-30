@@ -29,7 +29,8 @@ export class CPFValidator implements Validation.IPropertyValidator {
     public isAcceptable(input: string) {
 
         if (input === undefined) return false;
-        if (input.length === 0 || input.length > 11) return false;
+
+        if (input.length === 0 || input.length !== 11) return false;
 
         if (!/^\d+$/.test(input)) return false;
 
