@@ -3,7 +3,10 @@
   "version": "1.3.2",
   "description": "business rules engine",
   "main": "dist/businessRulesEngine.js",
-  "typings": "dist/src/index.d.ts",
+  "typings": [
+    "src/external-typings/hashmap.d.ts",
+    "dist/src/index.d.ts"
+  ],
   "files": [
     "dist/**/*.*",
     "src/**/*.*"
