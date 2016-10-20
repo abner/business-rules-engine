@@ -62,6 +62,7 @@
     "grunt-run": "^0.2.3",
     "grunt-typedoc": "^0.1.1",
     "grunt-typescript": "^0.3.8",
+    "jasmine-ts": "0.0.3",
     "jsdoc": "^3.4.1",
     "ngdocs": "^0.1.0",
     "sinon": "^1.12.1",

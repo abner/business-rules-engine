@@ -2,8 +2,7 @@ import { IComponent } from './../Utils/component.interface';
 import { ISignal } from './../Utils/signal.interface';
 import * as Q from 'q';
 
-import {  HashMap } from 'hashmap';
-
+let HashMap = require('hashmap');
 /**
      * Custom message functions.
      */
@@ -304,7 +303,7 @@ export interface IAbstractListValidationRule<T> {
   /**
    * Return map of rows of validation rules for collection-based structures (arrays).
    */
-  RowsMap: HashMap<T, IAbstractValidationRule<T>>;
+  RowsMap: any;
 
   /**
    *  Return rows of validation rules for collection-based structures (arrays).

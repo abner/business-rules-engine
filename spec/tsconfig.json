@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "outDir": "../spec/",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+          "dom",
+          "es6"
+        ],
+        "mapRoot": "./",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": true,
+        "declaration": true,
+        "typeRoots": [
+          "../node_modules/@types",
+          "../src/@types"
+        ]
+    },
+    "exclude": [
+      "../dist2"
+    ]
+}

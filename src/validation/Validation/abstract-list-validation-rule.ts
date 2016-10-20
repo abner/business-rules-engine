@@ -1,11 +1,14 @@
 import * as Q from 'q';
 import * as _ from 'underscore';
-import { HashMap } from 'hashmap';
 
 import { IValidationResult } from './interfaces';
 import { AbstractValidationRule } from './abstract-validation-rule';
 import { IAbstractListValidationRule, IAbstractValidationRule } from './interfaces';
 import { AbstractValidator } from './abstract-validator';
+
+let HashMap: any =  require('hashmap').HashMap;
+
+console.log('HASHMAP', HashMap);
 /**
      *
      * @ngdoc object
@@ -18,7 +21,7 @@ import { AbstractValidator } from './abstract-validator';
      */
 export class AbstractListValidationRule<T> extends AbstractValidationRule<T> implements IAbstractListValidationRule<T>{
 
-  public RowsMap = new HashMap<any, IAbstractValidationRule<T>>();
+  public RowsMap = new HashMap();
   //private RowsObserver;
   constructor(public Name: string, public validator: AbstractValidator<T>) {
     super(Name, validator, true);
